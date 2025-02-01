@@ -1,18 +1,245 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TrendHunt PH</title>
-    <link rel="stylesheet" href="style.css">
+<head>
+  <meta charset="UTF-8">
+  <title>TrendHunt PH | Discover the Latest Trending Products</title>
+  <meta name="description" content="Discover trending products and tech insights at TrendHunt PH. Search, browse, and buy the latest items with our affiliate links.">
+  <meta name="keywords" content="trending, products, tech, affiliate, TrendHunt PH">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:title" content="TrendHunt PH | Discover the Latest Trending Products">
+  <meta property="og:description" content="Discover trending products and tech insights at TrendHunt PH. Search, browse, and buy the latest items with our affiliate links.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://yourdomain.com">
+  <meta property="og:image" content="https://yourdomain.com/path/to/image.jpg">
+  
+  <!-- Twitter -->
+  <meta name="twitter:title" content="TrendHunt PH | Discover the Latest Trending Products">
+  <meta name="twitter:description" content="Discover trending products and tech insights at TrendHunt PH. Search, browse, and buy the latest items with our affiliate links.">
+  <meta name="twitter:image" content="https://yourdomain.com/path/to/image.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <title>TrendHunt PH</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    /* General Styles */
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      background-color: #f9f9f9;
+    }
+
+    /* Header */
+    h1 {
+      background-color: #007bff;
+      color: white;
+      padding: 20px;
+      margin: 0;
+      font-size: 24px;
+    }
+
+    /* Main container */
+    .container {
+      max-width: 400px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Input and button styling */
+    input, button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button {
+      background-color: #007bff;
+      color: white;
+      cursor: pointer;
+      border: none;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    /* Trending item styling */
+    .trending-item {
+      border: 1px solid #ddd;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 5px;
+      text-align: left;
+    }
+
+    .trending-item h3 {
+      margin: 0 0 5px 0;
+    }
+
+    .trending-item p {
+      margin: 0;
+    }
+
+    .buy-button {
+      display: inline-block;
+      margin-top: 8px;
+      padding: 8px 16px;
+      background-color: #28a745;
+      color: #fff;
+      border-radius: 4px;
+      text-decoration: none;
+    }
+
+    /* Error log styling */
+    #errorLog {
+      background-color: #fee;
+      color: #900;
+      padding: 10px;
+      margin: 10px;
+      border: 1px solid #900;
+      text-align: left;
+    }
+  </style>
+  <!-- Google Analytics: replace 'G-XXXXXXXXXX' with your measurement ID -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
+
 </head>
 <body>
-    <header>
-        <h1>TrendHunt PH</h1>
-        <input type="text" placeholder="Search for trending products..." id="search">
-        <button id="searchBtn">Search</button>
-    </header>
-    <section id="trending"></section>
-    <script src="script.js"></script>
+
+  <!-- Error Log Container -->
+  <div id="errorLog"></div>
+
+  <!-- Main Container -->
+  <div class="container">
+    <h1>TrendHunt PH</h1>
+    <input type="text" id="searchInput" placeholder="Search trending items...">
+    <button id="searchBtn">Search</button>
+    <div id="trendingContainer"></div>
+  </div>
+
+  <script>
+    // Sample data with affiliate links
+    const trendingItems = [
+      { 
+        title: 'Product 1', 
+        description: 'Awesome product number one.',
+        affiliateLink: 'https://affiliate.example.com/product1'
+      },
+      { 
+        title: 'Product 2', 
+        description: 'Amazing features with product two.',
+        affiliateLink: 'https://affiliate.example.com/product2'
+      },
+      { 
+        title: 'Cool Gadget', 
+        description: 'Latest gadget in the market.',
+        affiliateLink: 'https://affiliate.example.com/cool-gadget'
+      },
+      { 
+        title: 'Tech Trend', 
+        description: 'Newest trend in technology.',
+        affiliateLink: 'https://affiliate.example.com/tech-trend'
+      }
+    ];
+
+    // Function to log errors to both the console and DOM
+    function logError(error) {
+      console.error(error);
+
+      let errorContainer = document.getElementById('errorLog');
+      if (!errorContainer) {
+        errorContainer = document.createElement('div');
+        errorContainer.id = 'errorLog';
+        document.body.insertBefore(errorContainer, document.body.firstChild);
+      }
+      errorContainer.innerHTML = `<strong>Error:</strong> ${error.message}`;
+    }
+
+    // Function to display trending items in the DOM
+    function displayItems(items) {
+      const container = document.getElementById('trendingContainer');
+      container.innerHTML = ''; // Clear previous items
+
+      if (items.length === 0) {
+        container.innerHTML = '<p>No matching items found.</p>';
+        return;
+      }
+
+      items.forEach(item => {
+        try {
+          // Ensure affiliateLink exists
+          if (!item.affiliateLink) {
+            throw new Error(`Affiliate link missing for item: ${item.title}`);
+          }
+
+          const itemDiv = document.createElement('div');
+          itemDiv.classList.add('trending-item');
+
+          const title = document.createElement('h3');
+          title.textContent = item.title;
+
+          const description = document.createElement('p');
+          description.textContent = item.description;
+
+          // Create "Buy Now" button with affiliate link
+          const link = document.createElement('a');
+          link.href = item.affiliateLink;
+          link.target = '_blank';  // Opens in a new tab
+          link.textContent = 'Buy Now';
+          link.classList.add('buy-button');
+
+          // Append elements
+          itemDiv.appendChild(title);
+          itemDiv.appendChild(description);
+          itemDiv.appendChild(link);
+
+          container.appendChild(itemDiv);
+        } catch (error) {
+          logError(error);
+        }
+      });
+    }
+
+    // Function to handle the search functionality
+    function handleSearch() {
+      const query = document.getElementById('searchInput').value.toLowerCase();
+      const filteredItems = trendingItems.filter(item => {
+        return (
+          item.title.toLowerCase().includes(query) ||
+          item.description.toLowerCase().includes(query)
+        );
+      });
+      displayItems(filteredItems);
+    }
+
+    // Event listeners for search button and Enter key
+    document.getElementById('searchBtn').addEventListener('click', handleSearch);
+    document.getElementById('searchInput').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        handleSearch();
+      }
+    });
+
+    // Display all items on initial page load
+    window.addEventListener('load', () => {
+      displayItems(trendingItems);
+    });
+  </script>
 </body>
 </html>

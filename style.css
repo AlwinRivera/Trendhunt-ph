@@ -1,21 +1,55 @@
+/* General styles */
 body {
     font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 20px;
     text-align: center;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
 }
-header {
-    background-color: #007BFF;
-    color: #fff;
+
+/* Header styling */
+h1 {
+    background-color: #007bff;
+    color: white;
     padding: 20px;
+    margin: 0;
+    font-size: 24px;
 }
+
+/* Centered container */
+.container {
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Input and button styling */
 input, button {
-    padding: 10px;
-    margin: 10px;
-    width: 80%;
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
 }
-#trending {
+
+button {
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    border: none;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Trending items styling */
+.trending {
     margin-top: 20px;
+    font-size: 18px;
+    color: #333;
 }
-
-
